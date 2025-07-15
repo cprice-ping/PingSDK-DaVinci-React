@@ -80,7 +80,7 @@ export default function Text({ collector, inputName, updater }) {
 
 For full, production-ready implementations and advanced usage, see the official ForgeRock sample app:
 
-- https://github.com/ForgeRock/sample-web-react-davinci
+- [https://github.com/ForgeRock/sample-web-react-davinci](https://github.com/ForgeRock/sdk-sample-apps/tree/main/javascript/reactjs-todo-davinci)]
 
 This repo contains:
 - Complete source code for all components and hooks
