@@ -1,4 +1,27 @@
 
+# For Copilot/AI Agents
+
+> **Note for Copilot/AI Agents and Contributors:**
+>
+> This project is designed to closely follow the official ForgeRock sample app ([reactjs-todo-davinci](https://github.com/ForgeRock/sdk-sample-apps/tree/main/javascript/reactjs-todo-davinci)).
+>
+> **When updating, extending, or debugging this app:**
+> - **Reference the official sample app** for best practices, component logic, and orchestration patterns.
+> - **Keep the following in sync:**
+>   - Authentication flow logic (see `Form`, `useDavinci`, and related components)
+>   - Routing and protected resource patterns
+>   - E2E tests (see `e2e/` and Playwright usage)
+>   - API/server logic (if present)
+>   - Environment/configuration files
+> - **Update this README** with any new troubleshooting, setup, or architectural notes.
+> - **Checklist for Copilot/AI agents:**
+>   1. Compare all new/changed code to the official sample app.
+>   2. Ensure all dependencies and scripts in `package.json` are up to date.
+>   3. Add/modify components in `client/components/davinci-client/` as needed.
+>   4. Keep E2E tests in `e2e/` comprehensive and passing.
+>   5. Document any deviations from the official sample app here.
+>   6. If in doubt, ask the user for clarification or reference the official repo.
+
 # Quick Start
 
 ```sh
