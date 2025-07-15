@@ -1,4 +1,94 @@
 #
+# Example Component Implementations
+
+Below are example implementations for several key components. Use these as a starting point if building from scratch.
+
+---
+
+### `Form` (Authentication Flow Container)
+```jsx
+import React from 'react';
+import Alert from './alert';
+import Password from './password';
+import Text from './text';
+// ...import other needed components
+
+export default function Form() {
+  // Compose state and handlers for the DaVinci flow here
+  // Render appropriate input components based on flow node
+  return (
+    <form>
+      {/* Example usage: */}
+      <Text collector={...} inputName="username" updater={...} />
+      <Password collector={...} inputName="password" updater={...} />
+      <Alert message="Error message" type="error" />
+      {/* ...other dynamic fields and submit button */}
+    </form>
+  );
+}
+```
+
+### `Alert`
+```jsx
+import React from 'react';
+export default function Alert({ message, type }) {
+  return (
+    <div className={`alert alert-${type}`}>{message}</div>
+  );
+}
+```
+
+### `Password`
+```jsx
+import React, { useState } from 'react';
+export default function Password({ collector, inputName, updater }) {
+  const [isVisible, setVisibility] = useState(false);
+  return (
+    <div>
+      <input
+        type={isVisible ? 'text' : 'password'}
+        name={inputName}
+        onChange={e => updater(e.target.value)}
+      />
+      <button type="button" onClick={() => setVisibility(v => !v)}>
+        {isVisible ? 'Hide' : 'Show'}
+      </button>
+    </div>
+  );
+}
+```
+
+### `Text`
+```jsx
+import React from 'react';
+export default function Text({ collector, inputName, updater }) {
+  return (
+    <input
+      type="text"
+      name={inputName}
+      onChange={e => updater(e.target.value)}
+      placeholder={collector?.output?.label || inputName}
+    />
+  );
+}
+```
+
+---
+
+#
+# Official ForgeRock Sample Repo
+
+For full, production-ready implementations and advanced usage, see the official ForgeRock sample app:
+
+- https://github.com/ForgeRock/sample-web-react-davinci
+
+This repo contains:
+- Complete source code for all components and hooks
+- Advanced DaVinci orchestration patterns
+- Additional documentation and troubleshooting
+
+---
+#
 # Component Reference
 
 Below are the key React components and hooks used for DaVinci orchestration and authentication flows. All are located under `client/components/davinci-client/` unless otherwise noted.
