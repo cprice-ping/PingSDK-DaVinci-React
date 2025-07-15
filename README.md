@@ -1,5 +1,96 @@
-#
+
+# Quick Start
+
+```sh
+git clone https://github.com/cprice-ping/PingSDK-DaVinci-React.git
+cd PingSDK-DaVinci-React
+npm install
+npm start
+# Visit http://localhost:8443
+```
+
+## Requirements
+
+- **Node.js** >= 14 (recommended: latest LTS)
+- **npm** >= 7
+
+Check your versions:
+```sh
+node --version
+npm --version
+```
+If you have issues, consider using [nvm](https://github.com/nvm-sh/nvm) to manage Node versions.
+
+---
+
+## Common Errors & FAQ
+
+**Q: I get `Module not found: Error: Can't resolve 'sass-loader'` or `html-webpack-plugin`?**
+
+A: Run:
+```sh
+npm install --save-dev sass-loader sass html-webpack-plugin
+```
+
+**Q: My .env changes aren't picked up?**
+
+A: Restart the dev server after editing `.env`.
+
+**Q: Port 8443 is in use?**
+
+A: Change `PORT` in `.env` and update `REDIRECT_URI` accordingly.
+
+**Q: API errors?**
+
+A: Ensure `API_URL` is correct and your PingOne tenant is reachable.
+
+---
+
 # Example Component Implementations
+
+## Sample package.json
+
+Below is a sample `package.json` for this project. Use this as a reference for required dependencies and scripts:
+
+```json
+{
+  "name": "pingsdk-davinci-react",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "webpack serve --mode development --open --port 8443",
+    "build": "webpack --mode production",
+    "e2e": "playwright test",
+    "e2e:ui": "playwright test --ui"
+  },
+  "dependencies": {
+    "@forgerock/davinci-client": "latest",
+    "@forgerock/javascript-sdk": "latest",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-router-dom": "^6.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0",
+    "@babel/preset-env": "^7.20.0",
+    "@babel/preset-react": "^7.18.6",
+    "@playwright/test": "^1.40.0",
+    "babel-loader": "^9.1.0",
+    "css-loader": "^6.7.3",
+    "dotenv-webpack": "^8.0.1",
+    "eslint": "^8.0.0",
+    "html-webpack-plugin": "^5.6.3",
+    "mini-css-extract-plugin": "^2.7.6",
+    "prettier": "^3.0.0",
+    "sass": "^1.62.0",
+    "sass-loader": "^13.3.2",
+    "style-loader": "^3.3.2",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1",
+    "webpack-dev-server": "^4.11.1"
+  }
+}
+```
 
 Below are example implementations for several key components. Use these as a starting point if building from scratch.
 
@@ -170,7 +261,7 @@ uglybaby/
 **Build & Tooling:**
 - webpack, webpack-cli, webpack-dev-server
 - babel, babel-loader, @babel/preset-react, @babel/preset-env
-- dotenv, mini-css-extract-plugin, sass, style-loader, css-loader
+- dotenv, mini-css-extract-plugin, sass, sass-loader, style-loader, css-loader, html-webpack-plugin
 
 **API & Utilities:**
 - express, pouchdb, cors, cookie-parser, uuid
@@ -202,9 +293,12 @@ WELLKNOWN_URL=https://your-tenant.oidc/.well-known/openid-configuration
 
 ## Setup & Run
 
+
 1. **Install dependencies:**
    ```sh
    npm install
+   # If you see errors about missing loaders or plugins, also run:
+   npm install --save-dev sass-loader sass html-webpack-plugin
    ```
 
 2. **Start the app:**
