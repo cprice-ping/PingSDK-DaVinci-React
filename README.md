@@ -7,12 +7,18 @@ Below are example implementations for several key components. Use these as a sta
 
 ### `Form` (Authentication Flow Container)
 ```jsx
-import React from 'react';
 import Alert from './alert';
 import Password from './password';
-import Text from './text';
-// ...import other needed components
+# Official ForgeRock Sample Repo
 
+For full, production-ready implementations and advanced usage, see the official ForgeRock sample app:
+
+- https://github.com/ForgeRock/sdk-sample-apps/tree/main/javascript/reactjs-todo-davinci
+
+This repo contains:
+- Complete source code for all components and hooks
+- Advanced DaVinci orchestration patterns
+- Additional documentation and troubleshooting
 export default function Form() {
   // Compose state and handlers for the DaVinci flow here
   // Render appropriate input components based on flow node
@@ -80,7 +86,7 @@ export default function Text({ collector, inputName, updater }) {
 
 For full, production-ready implementations and advanced usage, see the official ForgeRock sample app:
 
-- [https://github.com/ForgeRock/sample-web-react-davinci](https://github.com/ForgeRock/sdk-sample-apps/tree/main/javascript/reactjs-todo-davinci)]
+- https://github.com/ForgeRock/sdk-sample-apps/tree/main/javascript/reactjs-todo-davinci
 
 This repo contains:
 - Complete source code for all components and hooks
