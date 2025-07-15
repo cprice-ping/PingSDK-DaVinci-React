@@ -1,59 +1,140 @@
-# PingSDK + DaVinci React Sample App
+#
+# Component Reference
+
+Below are the key React components and hooks used for DaVinci orchestration and authentication flows. All are located under `client/components/davinci-client/` unless otherwise noted.
+
+| Component/Hook         | Type         | Description |
+|------------------------|--------------|-------------|
+| `Form`                 | Component    | Main view for managing the user authentication journey. Dynamically renders DaVinci flow nodes and collects user input. |
+| `Alert`                | Component    | Displays form errors or success messages. |
+| `Error`                | Component    | Renders error messages from the flow. |
+| `FlowLink`             | Component    | Renders a link to start a new DaVinci flow. |
+| `Password`             | Component    | Renders a password input with show/hide toggle. |
+| `Protect`              | Component    | Handles the "Protect" node in DaVinci flows (mocked for demo). |
+| `Readonly`             | Component    | Displays read-only values from the flow. |
+| `SingleSelect`         | Component    | Renders a dropdown for single-select options. |
+| `SubmitButton`         | Component    | Renders a submit button with loading spinner. |
+| `Text`                 | Component    | Renders a text input for user entry. |
+| `ObjectValueComponent` | Component    | Handles device selection and phone number input. |
+| `Unknown`              | Component    | Fallback for unknown collector types in the flow. |
+| `useDavinci`           | Hook         | Custom React hook to manage DaVinci flow state and client. |
+| `useOAuth`             | Hook         | Custom React hook to manage OAuth state and user info. |
+| `createClient`         | Utility      | Helper to initialize a DaVinci client instance. |
+
+Other folders like `icons/`, `layout/`, `todo/`, and `utilities/` provide supporting UI and logic components for the rest of the app.
+
+---
+
+# PingSDK + DaVinci React Sample App (Copilot-Optimized)
 
 ## Overview
 
-This project demonstrates how to use the Ping Identity JavaScript SDK and DaVinci client in a React app for authentication and orchestration.
+This project demonstrates how to build a modern React app using the Ping Identity JavaScript SDK and DaVinci client for authentication and orchestration. It includes a REST API, E2E tests, and a clear structure for rapid prototyping or production use.
+
+---
 
 ## Prerequisites
 
-- Node.js >= 14
-- A PingOne tenant with SSO and DaVinci enabled
-- OIDC Web App configured in PingOne
+- **Node.js** >= 14 (recommended: latest LTS)
+- **npm** >= 7
+- A **PingOne tenant** with SSO and DaVinci enabled
+- An **OIDC Web App** configured in PingOne
+
+---
+
+## Project Structure
+
+```
+uglybaby/
+├── .env                  # Environment variables (not committed)
+├── .gitignore            # Ignores .env and node_modules
+├── package.json          # Project dependencies and scripts
+├── webpack.config.js     # Webpack build config
+├── babel.config.js       # Babel config for React
+├── public/
+│   └── index.html        # Main HTML template
+├── client/
+│   ├── index.js          # React app entry point
+│   ├── components/       # React components (DaVinci, etc.)
+│   └── ...
+├── e2e/                  # Playwright E2E tests
+├── ping-davinci-app/     # (Optional) Additional app modules
+└── ...
+```
+
+---
+
+## Dependencies
+
+**Core:**
+- react, react-dom, react-router-dom
+- @forgerock/javascript-sdk
+- @forgerock/davinci-client
+
+**Build & Tooling:**
+- webpack, webpack-cli, webpack-dev-server
+- babel, babel-loader, @babel/preset-react, @babel/preset-env
+- dotenv, mini-css-extract-plugin, sass, style-loader, css-loader
+
+**API & Utilities:**
+- express, pouchdb, cors, cookie-parser, uuid
+
+**Testing:**
+- @playwright/test
+
+**Linting/Formatting:**
+- eslint, prettier, related plugins
+
+---
 
 ## Environment Variables
 
-Create a `.env` file in the project root with:
+Create a `.env` file in the project root (never commit this file):
 
-```
+```env
 API_URL=http://localhost:9443
 DEBUGGER_OFF=true
 DEVELOPMENT=true
 PORT=8443
-CLIENT_ID=your-ping-client-id
+WEB_OAUTH_CLIENT=your-ping-client-id
 REDIRECT_URI=http://localhost:8443
 SCOPE="openid profile email phone name revoke"
 WELLKNOWN_URL=https://your-tenant.oidc/.well-known/openid-configuration
 ```
 
-## Setup
+---
 
-1. Install dependencies:
-   ```
+## Setup & Run
+
+1. **Install dependencies:**
+   ```sh
    npm install
    ```
 
-2. Start the app:
-   ```
+2. **Start the app:**
+   ```sh
    npm start
    ```
 
-3. Visit [http://localhost:8443](http://localhost:8443) in your browser.
+3. **Open your browser:**
+   Visit [http://localhost:8443](http://localhost:8443)
 
-## Minimal DaVinci Integration Example
+---
 
-In your main React component:
+## DaVinci Integration Example
+
+Minimal usage in a React component:
 
 ```javascript
 import React, { useEffect, useRef } from 'react';
 import { davinci } from '@forgerock/davinci-client';
 
-function App() {
+function DaVinciFlow() {
   const containerRef = useRef(null);
-
   useEffect(() => {
     const config = {
       serverConfig: {
-        clientId: process.env.CLIENT_ID,
+        clientId: process.env.WEB_OAUTH_CLIENT,
         wellKnownUrl: process.env.WELLKNOWN_URL,
         redirectUri: process.env.REDIRECT_URI,
         scope: process.env.SCOPE,
@@ -64,23 +145,54 @@ function App() {
     const unmount = davinci(config);
     return () => unmount && unmount();
   }, []);
-
   return <div ref={containerRef} style={{ minHeight: 500 }} />;
 }
-
-export default App;
+export default DaVinciFlow;
 ```
+
+---
 
 ## Authentication Flow
 
-- User clicks "Sign In"
-- DaVinci flow is rendered and handles authentication
-- On success, user is greeted and can access protected resources
+1. User clicks **Sign In**
+2. DaVinci flow is rendered and handles authentication
+3. On success, user is greeted and can access protected resources
 
-## Testing
+---
 
-- E2E tests are in the `e2e/` folder and use Playwright.
-- Run tests with:
-  ```
+## E2E Testing
+
+- E2E tests are in the `e2e/` folder and use Playwright
+- Run all tests:
+  ```sh
   npm run e2e
   ```
+- Run Playwright UI:
+  ```sh
+  npm run e2e:ui
+  ```
+
+---
+
+## Troubleshooting & Customization
+
+- **.env not working?** Make sure you restart the dev server after editing `.env`.
+- **Port in use?** Change `PORT` in `.env` and update `REDIRECT_URI` accordingly.
+- **API errors?** Ensure `API_URL` is correct and your PingOne tenant is reachable.
+- **Styling:** Uses Bootstrap 5 and custom classes (`cstm_`). Edit `client/styles/` for custom styles.
+- **Debugging SDK:** Set `DEBUGGER_OFF=false` in `.env` to enable SDK integration breakpoints.
+
+---
+
+## Learn More
+
+- [Ping Identity Docs](https://docs.pingidentity.com/)
+- [DaVinci Docs](https://docs.pingidentity.com/access/daVinci/)
+- [React Docs](https://react.dev/)
+- [Playwright Docs](https://playwright.dev/)
+
+---
+
+## License
+
+MIT License. See LICENSE file for details.
